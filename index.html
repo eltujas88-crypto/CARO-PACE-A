@@ -271,6 +271,76 @@ box-shadow:0 8px 30px rgba(0,0,0,.15);
 width:100%;
 max-width:480px;
 margin:0 auto;
+position:relative;
+}
+
+/* ======================================== */
+/* MARCA DE AGUA RECTA - TONO INTERMEDIO */
+/* ======================================== */
+.watermark-container{
+position:relative;
+overflow:hidden;
+background:white;
+}
+
+.watermark-text{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+font-size:28px;
+font-weight:900;
+color:#b5bdc6;
+opacity:0.20;
+pointer-events:none;
+white-space:nowrap;
+z-index:1;
+letter-spacing:3px;
+user-select:none;
+font-family:'Poppins',sans-serif;
+text-align:center;
+line-height:1.6;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+.watermark-text .watermark-nombre{
+font-size:30px;
+font-weight:900;
+letter-spacing:4px;
+}
+
+.watermark-text .watermark-numero{
+font-size:36px;
+font-weight:900;
+letter-spacing:6px;
+margin-top:2px;
+}
+
+.watermark-text.small .watermark-nombre{
+font-size:22px;
+letter-spacing:3px;
+}
+
+.watermark-text.small .watermark-numero{
+font-size:28px;
+letter-spacing:4px;
+}
+
+/* Contenido de la tabla con z-index mayor que la marca de agua */
+.content-horizontal,
+.content-horizontal-pacena{
+position:relative;
+z-index:2;
+background:transparent;
+}
+
+.content-horizontal > *,
+.content-horizontal-pacena > *{
+position:relative;
+z-index:3;
 }
 
 .header{
@@ -318,12 +388,14 @@ padding:10px 8px;
 font-size:15px;
 font-weight:800;
 letter-spacing:0.5px;
+position:relative;
+z-index:2;
 }
 
 /* ESTILO HORIZONTAL (CHACALTAYA) */
 .content-horizontal{
-padding:14px 16px 16px;
-background:white;
+padding:18px 16px 20px;
+background:transparent;
 display:grid;
 grid-template-columns: 1fr auto 1fr;
 align-items:center;
@@ -386,8 +458,8 @@ color:#6b7280;
 /* ESTILO PACEÑA */
 /* ======================================== */
 .content-horizontal-pacena{
-padding:14px 16px 16px;
-background:white;
+padding:18px 16px 20px;
+background:transparent;
 display:grid;
 grid-template-columns: 1fr auto 1fr;
 align-items:center;
@@ -418,6 +490,15 @@ color:#6b7280;
 font-weight:600;
 letter-spacing:0.5px;
 margin-top:1px;
+}
+
+.content-horizontal-pacena .tc-row .tc-hora{
+font-size:9px;
+color:#6b7280;
+font-weight:500;
+letter-spacing:0.3px;
+margin-top:1px;
+opacity:0.8;
 }
 
 .content-horizontal-pacena .col{
@@ -498,12 +579,21 @@ font-size:13px;
 background:white;
 flex-wrap:wrap;
 gap:4px;
+position:relative;
+z-index:2;
 }
 
 .footer #tcVista{
 font-size:16px;
 font-weight:800;
 color:#111827;
+}
+
+.footer .ac-label{
+font-size:12px;
+font-weight:700;
+color:#6b7280;
+margin-left:auto;
 }
 
 /* ==================== */
@@ -637,6 +727,18 @@ color:#111827;
     .content-horizontal-pacena .tc-row .tc-label{
         font-size:9px;
     }
+    .watermark-text .watermark-nombre{
+        font-size:20px !important;
+    }
+    .watermark-text .watermark-numero{
+        font-size:26px !important;
+    }
+    .watermark-text.small .watermark-nombre{
+        font-size:16px !important;
+    }
+    .watermark-text.small .watermark-numero{
+        font-size:20px !important;
+    }
 }
 
 @media (max-width: 360px){
@@ -668,6 +770,18 @@ color:#111827;
     }
     .buttons{
         flex-direction:column;
+    }
+    .watermark-text .watermark-nombre{
+        font-size:16px !important;
+    }
+    .watermark-text .watermark-numero{
+        font-size:20px !important;
+    }
+    .watermark-text.small .watermark-nombre{
+        font-size:14px !important;
+    }
+    .watermark-text.small .watermark-numero{
+        font-size:16px !important;
     }
 }
 
@@ -766,56 +880,68 @@ CHACALTAYA
 SOLES → BOLIVIANOS
 </div>
 
-<!-- CONTENIDO HORIZONTAL (CHACALTAYA) -->
-<div id="contenidoHorizontal" class="content-horizontal">
+<!-- CONTENEDOR CON MARCA DE AGUA -->
+<div class="watermark-container">
 
-<div class="col">
-    <div class="label" id="labelDepositaH">Deposita</div>
-    <div class="valor">
-        <span id="enviaVistaH" class="send">0.00</span>
-        <span id="monedaSendH" class="moneda-send-h">BS</span>
+    <!-- MARCA DE AGUA RECTA: NOMBRE + NÚMERO (TONO INTERMEDIO) -->
+    <div class="watermark-text" id="watermarkText">
+        <span class="watermark-nombre">TRANSPORTADORA LA PACEÑA</span>
+        <span class="watermark-numero">69769664</span>
     </div>
-</div>
 
-<div class="arrow" id="flechaHorizontal">→</div>
+    <!-- CONTENIDO HORIZONTAL (CHACALTAYA) -->
+    <div id="contenidoHorizontal" class="content-horizontal">
 
-<div class="col">
-    <div class="label" id="labelRecibeH">Recibe</div>
-    <div class="valor">
-        <span id="recibeVistaH" class="receive">0.00</span>
-        <span id="monedaRecibeH" class="moneda-receive-h">SOLES</span>
+        <div class="col">
+            <div class="label" id="labelDepositaH">Deposita</div>
+            <div class="valor">
+                <span id="enviaVistaH" class="send">0.00</span>
+                <span id="monedaSendH" class="moneda-send-h">BS</span>
+            </div>
+        </div>
+
+        <div class="arrow" id="flechaHorizontal">→</div>
+
+        <div class="col">
+            <div class="label" id="labelRecibeH">Recibe</div>
+            <div class="valor">
+                <span id="recibeVistaH" class="receive">0.00</span>
+                <span id="monedaRecibeH" class="moneda-receive-h">SOLES</span>
+            </div>
+        </div>
+
     </div>
-</div>
 
-</div>
+    <!-- CONTENIDO PACEÑA -->
+    <div id="contenidoPacena" class="content-horizontal-pacena" style="display:none;">
 
-<!-- CONTENIDO PACEÑA -->
-<div id="contenidoPacena" class="content-horizontal-pacena" style="display:none;">
+        <div class="tc-row">
+            <span class="tc-value" id="tcPacena">2.92</span>
+            <span class="tc-label">TIPO DE CAMBIO</span>
+            <span class="tc-hora" id="horaPacena">12:00</span>
+        </div>
 
-<div class="tc-row">
-    <span class="tc-value" id="tcPacena">2.92</span>
-    <span class="tc-label">TIPO DE CAMBIO</span>
-</div>
+        <div class="col">
+            <div class="label" id="labelDepositaP">Deposita</div>
+            <div class="valor">
+                <span id="enviaVistaP" class="send">0.00</span>
+                <span id="monedaSendP" class="moneda-send-h">BS</span>
+            </div>
+        </div>
 
-<div class="col">
-    <div class="label" id="labelDepositaP">Deposita</div>
-    <div class="valor">
-        <span id="enviaVistaP" class="send">0.00</span>
-        <span id="monedaSendP" class="moneda-send-h">BS</span>
+        <div class="arrow" id="flechaPacena">→</div>
+
+        <div class="col">
+            <div class="label" id="labelRecibeP">Recibe</div>
+            <div class="valor">
+                <span id="recibeVistaP" class="receive">0.00</span>
+                <span id="monedaRecibeP" class="moneda-receive-h">SOLES</span>
+            </div>
+        </div>
+
+        <div class="comision-center" id="comisionCenterPacena">COMISIÓN 3%</div>
+
     </div>
-</div>
-
-<div class="arrow" id="flechaPacena">→</div>
-
-<div class="col">
-    <div class="label" id="labelRecibeP">Recibe</div>
-    <div class="valor">
-        <span id="recibeVistaP" class="receive">0.00</span>
-        <span id="monedaRecibeP" class="moneda-receive-h">SOLES</span>
-    </div>
-</div>
-
-<div class="comision-center" id="comisionCenterPacena">COMISIÓN 3%</div>
 
 </div>
 
@@ -823,6 +949,7 @@ SOLES → BOLIVIANOS
 <div class="footer" id="footerNormal">
     <span id="tcVista">T/C 0.00</span>
     <span>⏱ VIGENCIA 15 min</span>
+    <span class="ac-label">A:C</span>
 </div>
 
 </div>
@@ -860,6 +987,10 @@ const fechaText = document.getElementById("fechaText");
 const comisionCenterPacena = document.getElementById("comisionCenterPacena");
 const tcPacena = document.getElementById("tcPacena");
 const footerNormal = document.getElementById("footerNormal");
+const horaPacena = document.getElementById("horaPacena");
+
+// Marca de agua
+const watermarkText = document.getElementById("watermarkText");
 
 // Monedas horizontales CHACALTAYA
 const monedaSendH = document.getElementById("monedaSendH");
@@ -890,6 +1021,16 @@ let ultimoCampo = "depositar";
 
 function formato(n){
 return Number(n).toFixed(2);
+}
+
+// Actualizar la hora en el formato HH:MM
+function actualizarHora() {
+    const ahora = new Date();
+    const horas = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+    if (horaPacena) {
+        horaPacena.textContent = horas + ":" + minutos;
+    }
 }
 
 // Actualizar etiquetas de moneda
@@ -1004,6 +1145,9 @@ flechaHorizontal.textContent = "→";
 tcVista.style.display = "block";
 footerNormal.style.display = "flex";
 
+// Marca de agua - tamaño normal
+watermarkText.className = "watermark-text";
+
 }else if(empresa.value==="pacena"){
 
 tarjeta.className="card pacena";
@@ -1018,6 +1162,9 @@ contenidoPacena.style.display = "grid";
 flechaPacena.textContent = "→";
 tcVista.style.display = "none";
 footerNormal.style.display = "flex";
+
+// Marca de agua - tamaño más pequeño para Paceña
+watermarkText.className = "watermark-text small";
 
 }
 
@@ -1317,9 +1464,13 @@ localStorage.getItem("operacion")
 || "soles_bs";
 
 actualizarFecha();
+actualizarHora();
 actualizarEmpresa();
 actualizarMonedas();
 calcular();
+
+// Actualizar la hora cada minuto
+setInterval(actualizarHora, 60000);
 
 };
 
